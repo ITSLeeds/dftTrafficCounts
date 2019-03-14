@@ -23,7 +23,8 @@ pts_leeds = data_leeds %>%
     x = mean(Easting),
     y = mean(Northing)
     )
-pts_sf = st_as_sf(pts_leeds, coords = c("x", "y"), crs = 27700)
+pts_sf = st_as_sf(pts_leeds, coords = c("x", "y"), crs = 27700) 
+sf::write_sf(pts_sf, "pts_leeds.gpkg")
 # mapview::mapview(pts_sf, zcol = "n_cycle")
 ttm()
 tm_shape(pts_sf) +

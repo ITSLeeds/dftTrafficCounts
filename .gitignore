@@ -1,0 +1,7 @@
+*.xls
+*xls*
+*XLS*
+.Rproj.user*.g*
+*.gpkg
+*.geojson
+*.Rproj.user
