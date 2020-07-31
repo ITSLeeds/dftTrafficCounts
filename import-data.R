@@ -1,4 +1,70 @@
-# First stage: get data from Leeds
+# Bulk import traffic data
+
+library(tidyverse)
+
+u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
+download.file(u, "~/hd/data/uk/dft_traffic_counts_raw_counts-2000-2018.zip")
+traffic_data_original = readr::read_csv("~/hd/data/uk/dft_traffic_counts_raw_counts-2000-2018.zip")
+nrow(traffic_data_original) / 1e6 # 4 million
+traffic_data_original
+names(traffic_data_original)
+
+# what have we got for cycling?
+summary(traffic_data_original$pedal_cycles) # about 3 per hour
+# Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+# 0.000    0.000    0.000    2.894    2.000 2207.000 
+# check the guidance
+browseURL("http://data.dft.gov.uk.s3.amazonaws.com/road-traffic/all-traffic-data-metadata.pdf")
+
+# preliminary sense check of data: find counters with most cycling, London/Cambridge?
+counter_mean_cyclists = traffic_data_original %>% 
+  group_by(count_point_id) %>% 
+  summarise(
+    mean_cyclists = mean(pedal_cycles),
+    easting = mean(easting),
+    northing = mean(northing)
+    )
+# 31k counter points
+
+counters_sf = counter_mean_cyclists %>% 
+  sf::st_as_sf(coords = c("easting", "northing"), crs = 27700)
+
+counters_high_cycling = counters_sf %>% 
+  filter(mean_cyclists > 20)
+
+mapview::mapview(counters_high_cycling["mean_cyclists"]) # it works!
+
+# is there a column showing if estimated? not immediately obvious.
+# Compare with known count on Kirkstall road: https://roadtraffic.dft.gov.uk/manualcountpoints/16598
+counter_16598 = traffic_data_original %>% 
+  filter(count_point_id == "16598")
+
+View(counter_16598) # matches perfectly
+counter_16598 %>% 
+  filter(year == 2016) %>% 
+  select(pedal_cycles, direction_of_travel, hour)
+sum(.Last.value$pedal_cycles)
+
+counter_16598_dl = readr::read_csv("https://dft-statistics.s3.amazonaws.com/road-traffic/downloads/rawcount/count_point_id/dft_rawcount_count_point_id_16598.csv")
+counter_16598_dl %>% 
+  filter(year == 2016) %>% 
+  select(pedal_cycles, direction_of_travel, hour)
+sum(.Last.value$pedal_cycles)
+sum(counter_16598_dl$pedal_cycles) # differ from counts
+
+counter_16598_daily = readr::read_csv("https://dft-statistics.s3.amazonaws.com/road-traffic/downloads/aadf/count_point_id/dft_aadf_count_point_id_16598.csv")
+counter_16598_daily
+# Get data from Leeds: not reproducible
+
+counters_la = readr::read_csv("http://data.dft.gov.uk/road-traffic/local_authority_traffic.csv")
+lads = ukboundaries::lad2018
+summary(lads$lau118nm %in% counters_la$name)
+summary(lads$lau118cd %in% counters_la$ons_code)
+length(unique(counters_la$name))
+length(unique(lads$lau118nm))
+
+# combine with unitary authority data - from Rapid work?
+uas = ...
 
 library(dplyr)
 library(tmap)

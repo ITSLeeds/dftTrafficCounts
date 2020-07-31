@@ -5,3 +5,4 @@
 *.gpkg
 *.geojson
 *.Rproj.user
+.Rproj.user
