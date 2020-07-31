@@ -64,7 +64,9 @@ length(unique(counters_la$name))
 length(unique(lads$lau118nm))
 
 # combine with unitary authority data - from Rapid work?
-uas = ...
+# uas = ...
+
+# Challenge: create animated map
 
 library(dplyr)
 library(tmap)
