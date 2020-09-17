@@ -1,0 +1,43 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# dftTrafficCounts
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of dftTrafficCounts is to provide easy access to datasets provided by UK Department for Transport (DfT) on their [roadtraffic.dft.gov.uk](https://roadtraffic.dft.gov.uk) website.
+
+## Installation
+
+<!-- You can install the released version of dftTrafficCounts from [CRAN](https://CRAN.R-project.org) with: -->
+
+<!-- ``` r -->
+<!-- install.packages("dftTrafficCounts") -->
+<!-- ``` -->
+
+<!-- And the development version from [GitHub](https://github.com/) with: -->
+
+```r
+# install.packages("devtools")
+devtools::install_github("itsleeds/dftTrafficCounts")
+```
+
+<!-- From previous readme... -->
+<!-- If you have traffic count data you would like to contribute to the Bristol City Council open data platform please contact city.transport@bristol.gov.uk -->
+
+<!-- The entire dataset and a shapefile of the count locations can be downloaded here: http://1drv.ms/1LaIsZ4 -->
+
+<!-- This data has not been quality checked and we strongly advise users conduct their own assessment of the quality of the data before using it. -->
