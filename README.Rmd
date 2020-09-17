@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # dftTrafficCounts
 
 <!-- badges: start -->
+[![R build status](https://github.com/itsleeds/dftTrafficCounts/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/dftTrafficCounts/actions)
 <!-- badges: end -->
 
 The goal of dftTrafficCounts is to provide easy access to datasets provided by UK Department for Transport (DfT) on their [roadtraffic.dft.gov.uk](https://roadtraffic.dft.gov.uk) website.

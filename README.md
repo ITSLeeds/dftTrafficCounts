@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![R build
+status](https://github.com/itsleeds/dftTrafficCounts/workflows/R-CMD-check/badge.svg)](https://github.com/itsleeds/dftTrafficCounts/actions)
 <!-- badges: end -->
 
 The goal of dftTrafficCounts is to provide easy access to datasets
