@@ -1,13 +1,30 @@
 #' Bulk import traffic data
 #'
 #' This function downloads and reads bulk traffic data from the DfT
-#'
+#' @param base_url The base url of the data to access
+#' @param ua The URL appendix
+#' @param u The full URL (if applicable)
 #' @param dir Where should the data be stored? `tempdir()` by default.
 #' @export
-dtc_import = function(dir = tempdir()) {
-  u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
-  f = file.path(dir, "dft_traffic_counts_raw_counts-2000-2018.zip")
-  utils::download.file(u, f)
+#' @examples
+#' res = dtc_import()
+#' class(res)
+#' u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
+#' names(res)
+#' head(res[1:3, ])
+#' # dtc_import(u = u)
+dtc_import = function(
+  base_url = "https://dft-statistics.s3.amazonaws.com/road-traffic/downloads/",
+  ua = "aadf/count_point_id/dft_aadf_count_point_id_74816.csv",
+  u = NULL,
+  dir = tempdir()) {
+  if(!is.null(u)) {
+    f = file.path(dir, "dft_traffic_counts_raw_counts-2000-2018.zip")
+    utils::download.file(u, f)
+  } else {
+    u = paste0(base_url, ua)
+    f = u
+  }
   # a 755 MB file
   # system.time({
   #   traffic_data_original = readr::read_csv("~/hd/data/uk/dft_traffic_counts_raw_counts-2000-2018.zip")

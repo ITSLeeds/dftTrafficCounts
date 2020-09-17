@@ -4,11 +4,30 @@
 \alias{dtc_import}
 \title{Bulk import traffic data}
 \usage{
-dtc_import(dir = tempdir())
+dtc_import(
+  base_url = "https://dft-statistics.s3.amazonaws.com/road-traffic/downloads/",
+  ua = "aadf/count_point_id/dft_aadf_count_point_id_74816.csv",
+  u = NULL,
+  dir = tempdir()
+)
 }
 \arguments{
+\item{base_url}{The base url of the data to access}
+
+\item{ua}{The URL appendix}
+
+\item{u}{The full URL (if applicable)}
+
 \item{dir}{Where should the data be stored? `tempdir()` by default.}
 }
 \description{
 This function downloads and reads bulk traffic data from the DfT
+}
+\examples{
+res = dtc_import()
+class(res)
+u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
+names(res)
+head(res[1:3, ])
+# dtc_import(u = u)
 }
