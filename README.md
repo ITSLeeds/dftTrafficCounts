@@ -47,10 +47,10 @@ library(targets)
 ```
 
 ``` r
-targets::tar_glimpse()
+tar_visnetwork()
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-tarvis-1.png" width="100%" />
 
 ``` r
 print(tar_read(summary_dft))

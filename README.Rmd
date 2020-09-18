@@ -66,8 +66,8 @@ library(targets)
 ```
 
 
-```{r}
-targets::tar_glimpse()
+```{r tarvis}
+tar_visnetwork()
 ```
 
 ```{r}
