@@ -38,22 +38,24 @@ devtools::install_github("itsleeds/dftTrafficCounts")
 
 <!-- This data has not been quality checked and we strongly advise users conduct their own assessment of the quality of the data before using it. -->
 
-# Reproducibility
-
-You can reproduce the work presented here using the `targets` package:
+Load the package as follows:
 
 ``` r
-library(targets)
+library(dftTrafficCounts)
 ```
 
+# Getting traffic count data
+
+You can read-in the data as follows:
+
 ``` r
-tar_visnetwork()
+u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
+d = dtc_import(u = u)
 ```
 
-<img src="man/figures/README-tarvis-1.png" width="100%" />
+This is a large dataset:
 
 ``` r
-d = tar_read(data)
 nrow(d)
 #> [1] 4337901
 ncol(d)
@@ -89,9 +91,21 @@ tar_read(summary_mode) %>%
 
 <img src="man/figures/README-summary-year-1.png" width="100%" />
 
+# Reproducibility
+
+You can reproduce the work presented here using the `targets` package:
+
 ``` r
 targets::tar_make()
 ```
+
+Parts of the project are updated as follows:
+
+``` r
+tar_visnetwork()
+```
+
+<img src="man/figures/README-tarvis-1.png" width="100%" />
 
 # Summary of all the data
 

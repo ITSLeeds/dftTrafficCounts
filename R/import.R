@@ -9,9 +9,9 @@
 #' @examples
 #' res = dtc_import()
 #' class(res)
-#' u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
 #' names(res)
 #' head(res[1:3, ])
+#' u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
 #' # dtc_import(u = u)
 dtc_import = function(
   base_url = "https://dft-statistics.s3.amazonaws.com/road-traffic/downloads/",

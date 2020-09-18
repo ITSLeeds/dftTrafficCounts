@@ -52,30 +52,39 @@ devtools::install_github("itsleeds/dftTrafficCounts")
 
 <!-- This data has not been quality checked and we strongly advise users conduct their own assessment of the quality of the data before using it. -->
 
-# Reproducibility
-
-You can reproduce the work presented here using the `targets` package:
-
-```{r, echo=FALSE, message=FALSE}
-remotes::install_github("wlandau/targets", quiet = TRUE)
-remotes::install_github("wlandau/tarchetypes", quiet = TRUE)
-```
+Load the package as follows:
 
 ```{r}
+library(dftTrafficCounts)
+```
+
+
+# Getting traffic count data
+
+You can read-in the data as follows:
+
+```{r, eval=FALSE}
+u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
+d = dtc_import(u = u)
+```
+
+```{r, echo=FALSE}
 library(targets)
 ```
 
 
-```{r tarvis}
-tar_visnetwork()
+```{r, echo=FALSE}
+d = tar_read(data)
 ```
 
+This is a large dataset:
+
 ```{r}
-d = tar_read(data)
 nrow(d)
 ncol(d)
 names(d)
 ```
+
 
 
 ```{r summary-year}
@@ -88,9 +97,23 @@ tar_read(summary_mode) %>%
 ```
 
 
+# Reproducibility
+
+You can reproduce the work presented here using the `targets` package:
+
+```{r, echo=FALSE, message=FALSE}
+remotes::install_github("wlandau/targets", quiet = TRUE)
+remotes::install_github("wlandau/tarchetypes", quiet = TRUE)
+```
 
 ```{r, eval=FALSE}
 targets::tar_make()
+```
+
+Parts of the project are updated as follows:
+
+```{r tarvis}
+tar_visnetwork()
 ```
 
 
