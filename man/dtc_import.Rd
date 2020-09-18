@@ -3,6 +3,7 @@
 \name{dtc_import}
 \alias{dtc_import}
 \alias{dtc_import_la}
+\alias{dtc_import_roads}
 \title{Bulk import traffic data}
 \usage{
 dtc_import(
@@ -13,6 +14,8 @@ dtc_import(
 )
 
 dtc_import_la()
+
+dtc_import_roads()
 }
 \arguments{
 \item{base_url}{The base url of the data to access}

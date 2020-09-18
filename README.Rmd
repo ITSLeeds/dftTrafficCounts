@@ -62,12 +62,20 @@ library(dftTrafficCounts)
 
 # Getting traffic count data
 
-You can read-in the data as follows:
+You can read-in the data for a single counter point as follows:
 
 ```{r}
 d_counter = dtc_import()
 head(d_counter)
 ```
+
+Read-in the data for major roads as follows:
+
+```{r}
+d_roads = dtc_import_roads()
+names(d_roads)
+```
+
 
 
 ```{r, eval=FALSE}

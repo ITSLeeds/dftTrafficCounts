@@ -46,6 +46,12 @@ dtc_import = function(
 dtc_import_la = function() {
   dtc_import(u = "http://data.dft.gov.uk/road-traffic/local_authority_traffic.csv")
 }
+#' @export
+#' @rdname dtc_import
+dtc_import_roads = function() {
+  dtc_import(u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_aadf.zip")
+}
+
 
 local_authority_names_to_ids = function(la_names = c("Leeds")) {
   la_lookup = dtc_import_la()
