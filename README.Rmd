@@ -41,7 +41,7 @@ See the [Metadata](http://data.dft.gov.uk.s3.amazonaws.com/road-traffic/all-traf
 
 <!-- And the development version from [GitHub](https://github.com/) with: -->
 
-```r
+```{r, eval=FALSE}
 # install.packages("devtools")
 devtools::install_github("itsleeds/dftTrafficCounts")
 ```

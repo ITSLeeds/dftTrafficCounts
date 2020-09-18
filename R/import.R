@@ -39,6 +39,11 @@ dtc_import = function(
   # })
     # user  system elapsed
     # 6.609   2.186   5.842
+
+    if(!is.null(traffic_data_original$local_authority_id)) {
+      traffic_data_original$local_authority_name =
+        local_authority_names(traffic_data_original$local_authority_id)
+    }
     traffic_data_original
 }
 #' @export
@@ -66,6 +71,15 @@ local_authority_names_to_ids = function(
   # piggyback::pb_upload("la_df.csv")
   # summary(la_df)
   la_df$id[match(x = la_names, table = la_df$name)]
+}
+
+local_authority_names = function(
+  la_ids = 99,
+  u = "https://roadtraffic.dft.gov.uk/api/local-authorities/"
+) {
+  la_lookup = jsonlite::read_json(u, simplifyVector = TRUE)
+  la_df = la_lookup$data[1:3]
+  la_df$name[match(x = la_ids, table = la_df$id)]
 }
 
 # library(tidyverse)
