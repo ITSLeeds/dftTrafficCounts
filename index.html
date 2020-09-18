@@ -66,7 +66,7 @@
 <a href="#dfttrafficcounts" class="anchor"></a>dftTrafficCounts</h1></div>
 <!-- badges: start -->
 
-<p>The goal of dftTrafficCounts is to provide easy access to datasets provided by UK Department for Transport (DfT) on their <a href="https://roadtraffic.dft.gov.uk">roadtraffic.dft.gov.uk</a> website.</p>
+<p>The goal of dftTrafficCounts is to provide easy access to datasets provided by UK Department for Transport (DfT) on their <a href="https://roadtraffic.dft.gov.uk">roadtraffic.dft.gov.uk</a> website. See the <a href="http://data.dft.gov.uk.s3.amazonaws.com/road-traffic/all-traffic-data-metadata.pdf">Metadata</a> document for details.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -92,17 +92,96 @@
 <div id="getting-traffic-count-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#getting-traffic-count-data" class="anchor"></a>Getting traffic count data</h1>
-<p>You can read-in the data as follows:</p>
+<p>You can read-in the data for a single counter point as follows:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="kw">d_counter</span> <span class="op">=</span> <span class="fu"><a href="reference/dtc_import.html">dtc_import</a></span>()
+<span class="co">#&gt; Rows: 20</span>
+<span class="co">#&gt; Columns: 31</span>
+<span class="co">#&gt; Delimiter: ","</span>
+<span class="co">#&gt; chr [ 8]: region_name, local_authority_name, road_name, road_type, start_junction_road_nam...</span>
+<span class="co">#&gt; dbl [23]: count_point_id, year, region_id, local_authority_id, easting, northing, latitude...</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Use `spec()` to retrieve the guessed column specification</span>
+<span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">d_counter</span>)
+<span class="co">#&gt;  [1] "count_point_id"               "year"                        </span>
+<span class="co">#&gt;  [3] "region_id"                    "region_name"                 </span>
+<span class="co">#&gt;  [5] "local_authority_id"           "local_authority_name"        </span>
+<span class="co">#&gt;  [7] "road_name"                    "road_type"                   </span>
+<span class="co">#&gt;  [9] "start_junction_road_name"     "end_junction_road_name"      </span>
+<span class="co">#&gt; [11] "easting"                      "northing"                    </span>
+<span class="co">#&gt; [13] "latitude"                     "longitude"                   </span>
+<span class="co">#&gt; [15] "link_length_km"               "link_length_miles"           </span>
+<span class="co">#&gt; [17] "estimation_method"            "estimation_method_detailed"  </span>
+<span class="co">#&gt; [19] "pedal_cycles"                 "two_wheeled_motor_vehicles"  </span>
+<span class="co">#&gt; [21] "cars_and_taxis"               "buses_and_coaches"           </span>
+<span class="co">#&gt; [23] "lgvs"                         "hgvs_2_rigid_axle"           </span>
+<span class="co">#&gt; [25] "hgvs_3_rigid_axle"            "hgvs_3_or_4_articulated_axle"</span>
+<span class="co">#&gt; [27] "hgvs_4_or_more_rigid_axle"    "hgvs_5_articulated_axle"     </span>
+<span class="co">#&gt; [29] "hgvs_6_articulated_axle"      "all_hgvs"                    </span>
+<span class="co">#&gt; [31] "all_motor_vehicles"</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">d_counter</span>)
+<span class="co">#&gt; # A tibble: 6 x 31</span>
+<span class="co">#&gt;   count_point_id  year region_id region_name local_authority… local_authority…</span>
+<span class="co">#&gt;            &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;           </span>
+<span class="co">#&gt; 1          74816  2019         8 Yorkshire …               63 Leeds           </span>
+<span class="co">#&gt; 2          74816  2018         8 Yorkshire …               63 Leeds           </span>
+<span class="co">#&gt; 3          74816  2017         8 Yorkshire …               63 Leeds           </span>
+<span class="co">#&gt; 4          74816  2016         8 Yorkshire …               63 Leeds           </span>
+<span class="co">#&gt; 5          74816  2015         8 Yorkshire …               63 Leeds           </span>
+<span class="co">#&gt; 6          74816  2014         8 Yorkshire …               63 Leeds           </span>
+<span class="co">#&gt; # … with 25 more variables: road_name &lt;chr&gt;, road_type &lt;chr&gt;,</span>
+<span class="co">#&gt; #   start_junction_road_name &lt;chr&gt;, end_junction_road_name &lt;chr&gt;,</span>
+<span class="co">#&gt; #   easting &lt;dbl&gt;, northing &lt;dbl&gt;, latitude &lt;dbl&gt;, longitude &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   link_length_km &lt;dbl&gt;, link_length_miles &lt;dbl&gt;, estimation_method &lt;chr&gt;,</span>
+<span class="co">#&gt; #   estimation_method_detailed &lt;chr&gt;, pedal_cycles &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   two_wheeled_motor_vehicles &lt;dbl&gt;, cars_and_taxis &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   buses_and_coaches &lt;dbl&gt;, lgvs &lt;dbl&gt;, hgvs_2_rigid_axle &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   hgvs_3_rigid_axle &lt;dbl&gt;, hgvs_3_or_4_articulated_axle &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   hgvs_4_or_more_rigid_axle &lt;dbl&gt;, hgvs_5_articulated_axle &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   hgvs_6_articulated_axle &lt;dbl&gt;, all_hgvs &lt;dbl&gt;, all_motor_vehicles &lt;dbl&gt;</span>
+</pre></div>
+<p>Read-in the data for major roads as follows:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="kw">d_roads</span> <span class="op">=</span> <span class="fu"><a href="reference/dtc_import.html">dtc_import_roads</a></span>()
+<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">d_roads</span>)
+</pre></div>
+<p>Read-in data for all local authorities as follows:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="kw">d_las</span> <span class="op">=</span> <span class="fu"><a href="reference/dtc_import.html">dtc_import_la</a></span>()
+<span class="co">#&gt; Rows: 5,529</span>
+<span class="co">#&gt; Columns: 6</span>
+<span class="co">#&gt; Delimiter: ","</span>
+<span class="co">#&gt; dbl [6]: local_authority_id, year, link_length_km, link_length_miles, cars_and_taxis, al...</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Use `spec()` to retrieve the guessed column specification</span>
+<span class="co">#&gt; Pass a specification to the `col_types` argument to quiet this message</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">d_las</span>)
+<span class="co">#&gt; # A tibble: 6 x 7</span>
+<span class="co">#&gt;   local_authority…  year link_length_km link_length_mil… cars_and_taxis</span>
+<span class="co">#&gt;              &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;</span>
+<span class="co">#&gt; 1              132  1993           385.             239.     287107347.</span>
+<span class="co">#&gt; 2              170  1993           493.             306.     604140896.</span>
+<span class="co">#&gt; 3              171  1993           675.             420.     446328949.</span>
+<span class="co">#&gt; 4              163  1993           846.             526.     668148078.</span>
+<span class="co">#&gt; 5              164  1993           524.             326.     343540976.</span>
+<span class="co">#&gt; 6              156  1993           542.             337.     409189896 </span>
+<span class="co">#&gt; # … with 2 more variables: all_motor_vehicles &lt;dbl&gt;, local_authority_name &lt;chr&gt;</span>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">d_las</span>)
+<span class="co">#&gt; [1] 5529</span>
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">d_las</span><span class="op">$</span><span class="kw">local_authority_id</span>))
+<span class="co">#&gt; [1] 210</span>
+</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="kw">u</span> <span class="op">=</span> <span class="st">"http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"</span>
 <span class="kw">d</span> <span class="op">=</span> <span class="fu"><a href="reference/dtc_import.html">dtc_import</a></span>(u = <span class="kw">u</span>)
 </pre></div>
 <p>This is a large dataset:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">d</span>)
 <span class="co">#&gt; [1] 4337901</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="kw">d</span>)
-<span class="co">#&gt; [1] 33</span>
+<span class="co">#&gt; [1] 34</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">d</span>)
 <span class="co">#&gt;  [1] "count_point_id"               "direction_of_travel"         </span>
 <span class="co">#&gt;  [3] "year"                         "count_date"                  </span>
@@ -120,9 +199,12 @@
 <span class="co">#&gt; [27] "hgvs_3_rigid_axle"            "hgvs_4_or_more_rigid_axle"   </span>
 <span class="co">#&gt; [29] "hgvs_3_or_4_articulated_axle" "hgvs_5_articulated_axle"     </span>
 <span class="co">#&gt; [31] "hgvs_6_articulated_axle"      "all_hgvs"                    </span>
-<span class="co">#&gt; [33] "all_motor_vehicles"</span>
+<span class="co">#&gt; [33] "all_motor_vehicles"           "local_authority_name"</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">local_authority_name</span>)
+<span class="co">#&gt; [1] "Lancashire" "Lancashire" "Lancashire" "Lancashire" "Lancashire"</span>
+<span class="co">#&gt; [6] "Lancashire"</span>
 </pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co"># could become package function</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">ggplot2</span>)
 <span class="fu">tar_read</span>(<span class="kw">summary_mode</span>) <span class="op">%&gt;%</span> 
@@ -136,12 +218,13 @@
 <h1 class="hasAnchor">
 <a href="#reproducibility" class="anchor"></a>Reproducibility</h1>
 <p>You can reproduce the work presented here using the <code>targets</code> package:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="kw">targets</span>::<span class="fu">tar_make</span>()
 </pre></div>
 <p>Parts of the project are updated as follows:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="fu">tar_visnetwork</span>()
+<span class="co">#&gt; Loading dftTrafficCounts</span>
 </pre></div>
 <p><img src="reference/figures/README-tarvis-1.png" width="100%"></p>
 </div>
@@ -149,7 +232,7 @@
 <h1 class="hasAnchor">
 <a href="#summary-of-all-the-data" class="anchor"></a>Summary of all the data</h1>
 <p>A summary of the raw DfT data is shown below:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu">tar_read</span>(<span class="kw">summary_dft</span>))
 <span class="co">#&gt;  count_point_id   direction_of_travel      year        count_date        </span>
 <span class="co">#&gt;  Min.   :    51   Length:4337901      Min.   :2000   Min.   :2000-03-17  </span>
@@ -214,12 +297,12 @@
 <span class="co">#&gt;  Mean   :   7.449        Mean   :   7.459        Mean   :  36.45  </span>
 <span class="co">#&gt;  3rd Qu.:   2.000        3rd Qu.:   2.000        3rd Qu.:  26.00  </span>
 <span class="co">#&gt;  Max.   :1107.000        Max.   :1430.000        Max.   :2691.00  </span>
-<span class="co">#&gt;  all_motor_vehicles</span>
-<span class="co">#&gt;  Min.   :    0.0   </span>
-<span class="co">#&gt;  1st Qu.:   54.0   </span>
-<span class="co">#&gt;  Median :  245.0   </span>
-<span class="co">#&gt;  Mean   :  535.6   </span>
-<span class="co">#&gt;  3rd Qu.:  650.0   </span>
+<span class="co">#&gt;  all_motor_vehicles local_authority_name</span>
+<span class="co">#&gt;  Min.   :    0.0    Length:4337901      </span>
+<span class="co">#&gt;  1st Qu.:   54.0    Class :character    </span>
+<span class="co">#&gt;  Median :  245.0    Mode  :character    </span>
+<span class="co">#&gt;  Mean   :  535.6                        </span>
+<span class="co">#&gt;  3rd Qu.:  650.0                        </span>
 <span class="co">#&gt;  Max.   :10905.0</span>
 </pre></div>
 </div>
