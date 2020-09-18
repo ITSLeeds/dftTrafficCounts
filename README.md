@@ -53,8 +53,29 @@ tar_visnetwork()
 <img src="man/figures/README-tarvis-1.png" width="100%" />
 
 ``` r
-nrow(data)
-#> NULL
+d = tar_read(data)
+nrow(d)
+#> [1] 4337901
+ncol(d)
+#> [1] 33
+names(d)
+#>  [1] "count_point_id"               "direction_of_travel"         
+#>  [3] "year"                         "count_date"                  
+#>  [5] "hour"                         "region_id"                   
+#>  [7] "local_authority_id"           "road_name"                   
+#>  [9] "road_category"                "road_type"                   
+#> [11] "start_junction_road_name"     "end_junction_road_name"      
+#> [13] "easting"                      "northing"                    
+#> [15] "latitude"                     "longitude"                   
+#> [17] "link_length_km"               "link_length_miles"           
+#> [19] "sequence"                     "ramp"                        
+#> [21] "pedal_cycles"                 "two_wheeled_motor_vehicles"  
+#> [23] "cars_and_taxis"               "buses_and_coaches"           
+#> [25] "lgvs"                         "hgvs_2_rigid_axle"           
+#> [27] "hgvs_3_rigid_axle"            "hgvs_4_or_more_rigid_axle"   
+#> [29] "hgvs_3_or_4_articulated_axle" "hgvs_5_articulated_axle"     
+#> [31] "hgvs_6_articulated_axle"      "all_hgvs"                    
+#> [33] "all_motor_vehicles"
 ```
 
 ``` r

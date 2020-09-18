@@ -57,8 +57,8 @@ devtools::install_github("itsleeds/dftTrafficCounts")
 You can reproduce the work presented here using the `targets` package:
 
 ```{r, echo=FALSE, message=FALSE}
-remotes::install_github("wlandau/targets")
-remotes::install_github("wlandau/tarchetypes")
+remotes::install_github("wlandau/targets", quiet = TRUE)
+remotes::install_github("wlandau/tarchetypes", quiet = TRUE)
 ```
 
 ```{r}
@@ -71,7 +71,10 @@ tar_visnetwork()
 ```
 
 ```{r}
-nrow(data)
+d = tar_read(data)
+nrow(d)
+ncol(d)
+names(d)
 ```
 
 
