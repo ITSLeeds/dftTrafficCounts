@@ -135,6 +135,14 @@ length(unique(d_las$local_authority_id))
 #> [1] 210
 ```
 
+<!-- We can plot the results as follows: -->
+
+<!-- ```{r} -->
+
+<!-- # d_las %>%  -->
+
+<!-- ``` -->
+
 ``` r
 u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
 d = dtc_import(u = u)
@@ -170,7 +178,20 @@ head(d$local_authority_name)
 #> [6] "Lancashire"
 ```
 
-We can look at how patterns change over time for the whole dataset:
+We can look at how patterns change over time for the whole dataset.
+
+Lets look at the number of count entries for each year.
+
+``` r
+summary(d$count_date)
+#>         Min.      1st Qu.       Median         Mean      3rd Qu.         Max. 
+#> "2000-03-17" "2005-05-13" "2009-06-26" "2010-01-28" "2015-04-24" "2019-10-18"
+d_year_count = d %>% count(year)
+d_day_count = d %>% count(count_date)
+plot(d_day_count)
+```
+
+<img src="man/figures/README-summary-count-day-1.png" width="100%" />
 
 ``` r
 # could become package function

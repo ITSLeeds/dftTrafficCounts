@@ -82,6 +82,12 @@ local_authority_names = function(
   la_df$name[match(x = la_ids, table = la_df$id)]
 }
 
+# d_saferactive = readRDS("~/saferactive/saferactive/traffic_data_national.Rds")
+# names(d_saferactive)
+# names(d)
+# nrow(d_saferactive)
+# summary(d_saferactive$count_date)
+
 # library(tidyverse)
 #
 # u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"

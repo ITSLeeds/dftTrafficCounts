@@ -86,6 +86,14 @@ nrow(d_las)
 length(unique(d_las$local_authority_id))
 ```
 
+<!-- We can plot the results as follows: -->
+
+<!-- ```{r} -->
+<!-- # d_las %>%  -->
+
+<!-- ``` -->
+
+
 
 
 
@@ -112,7 +120,27 @@ names(d)
 head(d$local_authority_name)
 ```
 
-We can look at how patterns change over time for the whole dataset:
+```{r, eval=FALSE, echo=FALSE}
+# aim: sense check
+d_eastings_northings = d %>% 
+  group_by(easting, northing) %>% 
+  count()
+d_sf = d_eastings_northings %>% sf::st_as_sf(coords = c("easting", "northing"), crs = 27700)
+mapview::mapview(d_sf)
+```
+
+
+We can look at how patterns change over time for the whole dataset.
+
+Lets look at the number of count entries for each year.
+
+```{r, summary-count-day}
+summary(d$count_date)
+d_year_count = d %>% count(year)
+d_day_count = d %>% count(count_date)
+plot(d_day_count)
+```
+
 
 ```{r summary-year}
 # could become package function
