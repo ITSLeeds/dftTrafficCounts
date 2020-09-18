@@ -83,8 +83,18 @@
 <!-- If you have traffic count data you would like to contribute to the Bristol City Council open data platform please contact city.transport@bristol.gov.uk -->
 <!-- The entire dataset and a shapefile of the count locations can be downloaded here: http://1drv.ms/1LaIsZ4 -->
 <!-- This data has not been quality checked and we strongly advise users conduct their own assessment of the quality of the data before using it. -->
-<p>Load the package as follows:</p>
+<p>Load the package (and packages we’ll use below) as follows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">dplyr</span>)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'dplyr'</span>
+<span class="co">#&gt; The following objects are masked from 'package:stats':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     filter, lag</span>
+<span class="co">#&gt; The following objects are masked from 'package:base':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     intersect, setdiff, setequal, union</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">ggplot2</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">dftTrafficCounts</span>)
 </pre></div>
 </div>
@@ -172,16 +182,40 @@
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span>(<span class="kw">d_las</span><span class="op">$</span><span class="kw">local_authority_id</span>))
 <span class="co">#&gt; [1] 210</span>
 </pre></div>
-<!-- We can plot the results as follows: -->
-<!-- ```{r} -->
-<!-- # d_las %>%  -->
-<!-- ``` -->
+<p>We can plot the results as follows:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">las_of_interest</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Leeds"</span>, <span class="st">"Derby"</span>, <span class="st">"Southampton"</span>,
+                    <span class="st">"Nottingham"</span>, <span class="st">"Birmingham"</span>)
+<span class="kw">d_las</span>
+<span class="co">#&gt; # A tibble: 5,529 x 7</span>
+<span class="co">#&gt;    local_authority…  year link_length_km link_length_mil… cars_and_taxis</span>
+<span class="co">#&gt;               &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;            &lt;dbl&gt;          &lt;dbl&gt;</span>
+<span class="co">#&gt;  1              132  1993           385.             239.     287107347.</span>
+<span class="co">#&gt;  2              170  1993           493.             306.     604140896.</span>
+<span class="co">#&gt;  3              171  1993           675.             420.     446328949.</span>
+<span class="co">#&gt;  4              163  1993           846.             526.     668148078.</span>
+<span class="co">#&gt;  5              164  1993           524.             326.     343540976.</span>
+<span class="co">#&gt;  6              156  1993           542.             337.     409189896 </span>
+<span class="co">#&gt;  7               74  1993           933.             580.    1024182940 </span>
+<span class="co">#&gt;  8              198  1993           550.             342.     319820060.</span>
+<span class="co">#&gt;  9              193  1993           456.             283.     291962403.</span>
+<span class="co">#&gt; 10              169  1993           714.             443.     561704370.</span>
+<span class="co">#&gt; # … with 5,519 more rows, and 2 more variables: all_motor_vehicles &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   local_authority_name &lt;chr&gt;</span>
+<span class="kw">d_las_of_interest</span> <span class="op">=</span> <span class="kw">d_las</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">local_authority_name</span> <span class="op">%in%</span> <span class="kw">las_of_interest</span>)
+<span class="kw">d_las</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span>() <span class="op">+</span>
+  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="kw">year</span>, <span class="kw">all_motor_vehicles</span>, group = <span class="kw">local_authority_name</span>), colour = <span class="st">"grey"</span>) <span class="op">+</span>
+  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="kw">year</span>, <span class="kw">all_motor_vehicles</span>, colour = <span class="kw">local_authority_name</span>), data = <span class="kw">d_las_of_interest</span>, size = <span class="fl">1.2</span>)
+</pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="kw">u</span> <span class="op">=</span> <span class="st">"http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"</span>
 <span class="kw">d</span> <span class="op">=</span> <span class="fu"><a href="reference/dtc_import.html">dtc_import</a></span>(u = <span class="kw">u</span>)
 </pre></div>
 <p>This is a large dataset covering all local authorities in Great Britain:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
+<div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">d</span>)
 <span class="co">#&gt; [1] 4337901</span>
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="kw">d</span>)
@@ -210,7 +244,7 @@
 </pre></div>
 <p>We can look at how patterns change over time for the whole dataset.</p>
 <p>Lets look at the number of count entries for each year.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">d</span><span class="op">$</span><span class="kw">count_date</span>)
 <span class="co">#&gt;         Min.      1st Qu.       Median         Mean      3rd Qu.         Max. </span>
 <span class="co">#&gt; "2000-03-17" "2005-05-13" "2009-06-26" "2010-01-28" "2015-04-24" "2019-10-18"</span>
@@ -219,9 +253,8 @@
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">d_day_count</span>)
 </pre></div>
 <p><img src="reference/figures/README-summary-count-day-1.png" width="100%"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="co"># could become package function</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">ggplot2</span>)
 <span class="fu">tar_read</span>(<span class="kw">summary_mode</span>) <span class="op">%&gt;%</span> 
   <span class="fu">ggplot</span>() <span class="op">+</span>
   <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="kw">year</span>, <span class="kw">value</span>, colour = <span class="kw">name</span>)) <span class="op">+</span>
@@ -229,9 +262,7 @@
 </pre></div>
 <p><img src="reference/figures/README-summary-year-1.png" width="100%"></p>
 <p>And by local authorities:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="kw">las_of_interest</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Leeds"</span>, <span class="st">"Derby"</span>, <span class="st">"Southampton"</span>,
-                    <span class="st">"Nottingham"</span>, <span class="st">"Birmingham"</span>)
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="kw">d_sample</span> <span class="op">=</span> <span class="kw">d</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">local_authority_name</span> <span class="op">%in%</span> <span class="kw">las_of_interest</span>)
 <span class="kw">d_summary_la</span> <span class="op">=</span> <span class="kw">d_sample</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span>(<span class="kw">pedal_cycles</span><span class="op">:</span><span class="kw">buses_and_coaches</span> <span class="op">|</span> <span class="fu">matches</span>(<span class="st">"year|local_authority_name"</span>)) <span class="op">%&gt;%</span> 
@@ -249,92 +280,20 @@
 <h1 class="hasAnchor">
 <a href="#reproducibility" class="anchor"></a>Reproducibility</h1>
 <p>You can reproduce the work presented here using the <code>targets</code> package:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="kw">targets</span>::<span class="fu">tar_make</span>()
 </pre></div>
 <p>Parts of the project are updated as follows:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu">tar_visnetwork</span>()
-<span class="co">#&gt; Loading dftTrafficCounts</span>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="co"># tar_visnetwork()</span>
 </pre></div>
-<p><img src="reference/figures/README-tarvis-1.png" width="100%"></p>
 </div>
 <div id="summary-of-all-the-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#summary-of-all-the-data" class="anchor"></a>Summary of all the data</h1>
 <p>A summary of the raw DfT data is shown below:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu">tar_read</span>(<span class="kw">summary_dft</span>))
-<span class="co">#&gt;  count_point_id   direction_of_travel      year        count_date        </span>
-<span class="co">#&gt;  Min.   :    51   Length:4337901      Min.   :2000   Min.   :2000-03-17  </span>
-<span class="co">#&gt;  1st Qu.: 46110   Class :character    1st Qu.:2005   1st Qu.:2005-05-13  </span>
-<span class="co">#&gt;  Median :810147   Mode  :character    Median :2009   Median :2009-06-26  </span>
-<span class="co">#&gt;  Mean   :529590                       Mean   :2010   Mean   :2010-01-28  </span>
-<span class="co">#&gt;  3rd Qu.:945786                       3rd Qu.:2015   3rd Qu.:2015-04-24  </span>
-<span class="co">#&gt;  Max.   :999999                       Max.   :2019   Max.   :2019-10-18  </span>
-<span class="co">#&gt;       hour        region_id      local_authority_id  road_name        </span>
-<span class="co">#&gt;  Min.   : 0.0   Min.   : 1.000   Min.   :  1.0      Length:4337901    </span>
-<span class="co">#&gt;  1st Qu.: 9.0   1st Qu.: 4.000   1st Qu.: 67.0      Class :character  </span>
-<span class="co">#&gt;  Median :12.0   Median : 7.000   Median : 97.0      Mode  :character  </span>
-<span class="co">#&gt;  Mean   :12.5   Mean   : 6.157   Mean   :102.5                        </span>
-<span class="co">#&gt;  3rd Qu.:15.0   3rd Qu.: 9.000   3rd Qu.:141.0                        </span>
-<span class="co">#&gt;  Max.   :18.0   Max.   :11.000   Max.   :210.0                        </span>
-<span class="co">#&gt;  road_category       road_type         start_junction_road_name</span>
-<span class="co">#&gt;  Length:4337901     Length:4337901     Length:4337901          </span>
-<span class="co">#&gt;  Class :character   Class :character   Class :character        </span>
-<span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character        </span>
-<span class="co">#&gt;                                                                </span>
-<span class="co">#&gt;                                                                </span>
-<span class="co">#&gt;                                                                </span>
-<span class="co">#&gt;  end_junction_road_name    easting          northing          latitude    </span>
-<span class="co">#&gt;  Length:4337901         Min.   : 70406   Min.   :  10240   Min.   :49.91  </span>
-<span class="co">#&gt;  Class :character       1st Qu.:367870   1st Qu.: 178500   1st Qu.:51.49  </span>
-<span class="co">#&gt;  Mode  :character       Median :432710   Median : 275950   Median :52.36  </span>
-<span class="co">#&gt;                         Mean   :432488   Mean   : 302533   Mean   :52.61  </span>
-<span class="co">#&gt;                         3rd Qu.:510541   3rd Qu.: 396995   3rd Qu.:53.47  </span>
-<span class="co">#&gt;                         Max.   :655040   Max.   :1209448   Max.   :60.76  </span>
-<span class="co">#&gt;    longitude       link_length_km     link_length_miles    sequence        </span>
-<span class="co">#&gt;  Min.   :-7.4431   Length:4337901     Length:4337901     Length:4337901    </span>
-<span class="co">#&gt;  1st Qu.:-2.4816   Class :character   Class :character   Class :character  </span>
-<span class="co">#&gt;  Median :-1.5119   Mode  :character   Mode  :character   Mode  :character  </span>
-<span class="co">#&gt;  Mean   :-1.5373                                                           </span>
-<span class="co">#&gt;  3rd Qu.:-0.3847                                                           </span>
-<span class="co">#&gt;  Max.   : 2.0000                                                           </span>
-<span class="co">#&gt;      ramp            pedal_cycles      two_wheeled_motor_vehicles</span>
-<span class="co">#&gt;  Length:4337901     Min.   :   0.000   Min.   :  0.000           </span>
-<span class="co">#&gt;  Class :character   1st Qu.:   0.000   1st Qu.:  0.000           </span>
-<span class="co">#&gt;  Mode  :character   Median :   0.000   Median :  1.000           </span>
-<span class="co">#&gt;                     Mean   :   2.873   Mean   :  4.982           </span>
-<span class="co">#&gt;                     3rd Qu.:   2.000   3rd Qu.:  5.000           </span>
-<span class="co">#&gt;                     Max.   :2207.000   Max.   :768.000           </span>
-<span class="co">#&gt;  cars_and_taxis   buses_and_coaches       lgvs         hgvs_2_rigid_axle</span>
-<span class="co">#&gt;  Min.   :   0.0   Min.   :   0.000   Min.   :   0.00   Min.   :   0.00  </span>
-<span class="co">#&gt;  1st Qu.:  44.0   1st Qu.:   0.000   1st Qu.:   7.00   1st Qu.:   0.00  </span>
-<span class="co">#&gt;  Median : 195.0   Median :   2.000   Median :  29.00   Median :   3.00  </span>
-<span class="co">#&gt;  Mean   : 417.2   Mean   :   5.662   Mean   :  71.33   Mean   :  14.43  </span>
-<span class="co">#&gt;  3rd Qu.: 517.0   3rd Qu.:   7.000   3rd Qu.:  82.00   3rd Qu.:  14.00  </span>
-<span class="co">#&gt;  Max.   :9709.0   Max.   :1425.000   Max.   :5811.00   Max.   :2327.00  </span>
-<span class="co">#&gt;  hgvs_3_rigid_axle hgvs_4_or_more_rigid_axle hgvs_3_or_4_articulated_axle</span>
-<span class="co">#&gt;  Min.   : -3.000   Min.   :  0.000           Min.   :  0.00              </span>
-<span class="co">#&gt;  1st Qu.:  0.000   1st Qu.:  0.000           1st Qu.:  0.00              </span>
-<span class="co">#&gt;  Median :  0.000   Median :  0.000           Median :  0.00              </span>
-<span class="co">#&gt;  Mean   :  2.368   Mean   :  2.597           Mean   :  2.14              </span>
-<span class="co">#&gt;  3rd Qu.:  2.000   3rd Qu.:  2.000           3rd Qu.:  1.00              </span>
-<span class="co">#&gt;  Max.   :290.000   Max.   :796.000           Max.   :927.00              </span>
-<span class="co">#&gt;  hgvs_5_articulated_axle hgvs_6_articulated_axle    all_hgvs      </span>
-<span class="co">#&gt;  Min.   :   0.000        Min.   :   0.000        Min.   :   0.00  </span>
-<span class="co">#&gt;  1st Qu.:   0.000        1st Qu.:   0.000        1st Qu.:   1.00  </span>
-<span class="co">#&gt;  Median :   0.000        Median :   0.000        Median :   5.00  </span>
-<span class="co">#&gt;  Mean   :   7.449        Mean   :   7.459        Mean   :  36.45  </span>
-<span class="co">#&gt;  3rd Qu.:   2.000        3rd Qu.:   2.000        3rd Qu.:  26.00  </span>
-<span class="co">#&gt;  Max.   :1107.000        Max.   :1430.000        Max.   :2691.00  </span>
-<span class="co">#&gt;  all_motor_vehicles local_authority_name</span>
-<span class="co">#&gt;  Min.   :    0.0    Length:4337901      </span>
-<span class="co">#&gt;  1st Qu.:   54.0    Class :character    </span>
-<span class="co">#&gt;  Median :  245.0    Mode  :character    </span>
-<span class="co">#&gt;  Mean   :  535.6                        </span>
-<span class="co">#&gt;  3rd Qu.:  650.0                        </span>
-<span class="co">#&gt;  Max.   :10905.0</span>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="co"># print(tar_read(summary_dft))</span>
 </pre></div>
 </div>
 
