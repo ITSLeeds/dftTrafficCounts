@@ -22,6 +22,8 @@ dtc_import = function(
   if(!is.null(u) && grepl(pattern = "zip", x = u)) {
     f = file.path(dir, "dft_traffic_counts_raw_counts.zip")
     utils::download.file(u, f)
+  } else if(!is.null(u) && !grepl(pattern = "zip", x = u)) {
+    f = u
   } else {
     u = paste0(base_url, ua)
     f = u
