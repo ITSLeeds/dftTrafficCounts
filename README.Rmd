@@ -14,10 +14,11 @@ knitr::opts_chunk$set(
 ```
 
 ```{r targets-setup, include=FALSE}
-library(targets)
-tar_option_set(envir = getNamespace("dftTrafficCounts"))
+# library(targets)
+# tar_option_set(envir = getNamespace("dftTrafficCounts"))
 # tar_script()
-file.edit("_targets.R")
+# file.edit("_targets.R")
+# tar_manifest()
 ```
 
 
@@ -50,3 +51,7 @@ devtools::install_github("itsleeds/dftTrafficCounts")
 <!-- The entire dataset and a shapefile of the count locations can be downloaded here: http://1drv.ms/1LaIsZ4 -->
 
 <!-- This data has not been quality checked and we strongly advise users conduct their own assessment of the quality of the data before using it. -->
+
+# Reproducibility
+
+You can reproduce the work presented here as follows...

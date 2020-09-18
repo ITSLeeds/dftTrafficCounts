@@ -6,3 +6,5 @@
 *.geojson
 *.Rproj.user
 .Rproj.user
+*.html
+_targets/

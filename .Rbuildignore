@@ -4,3 +4,6 @@
 ^README\.Rmd$
 ^LICENSE\.md$
 ^_targets\.R$
+^_targets$
+^run\.R$
+^README\.html$
