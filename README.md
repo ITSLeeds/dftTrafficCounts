@@ -53,6 +53,30 @@ tar_visnetwork()
 <img src="man/figures/README-tarvis-1.png" width="100%" />
 
 ``` r
+nrow(data)
+#> NULL
+```
+
+``` r
+# could become package function
+library(ggplot2)
+tar_read(summary_mode) %>% 
+  ggplot() +
+  geom_line(aes(year, value, colour = name)) +
+  scale_y_log10()
+```
+
+<img src="man/figures/README-summary-year-1.png" width="100%" />
+
+``` r
+targets::tar_make()
+```
+
+# Summary of all the data
+
+A summary of the raw DfT data is shown below:
+
+``` r
 print(tar_read(summary_dft))
 #>  count_point_id   direction_of_travel      year        count_date        
 #>  Min.   :    51   Length:4337901      Min.   :2000   Min.   :2000-03-17  
@@ -124,19 +148,4 @@ print(tar_read(summary_dft))
 #>  Mean   :  535.6   
 #>  3rd Qu.:  650.0   
 #>  Max.   :10905.0
-```
-
-``` r
-# could become package function
-library(ggplot2)
-tar_read(summary_mode) %>% 
-  ggplot() +
-  geom_line(aes(year, value, colour = name)) +
-  scale_y_log10()
-```
-
-<img src="man/figures/README-summary-year-1.png" width="100%" />
-
-``` r
-targets::tar_make()
 ```

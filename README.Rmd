@@ -71,8 +71,9 @@ tar_visnetwork()
 ```
 
 ```{r}
-print(tar_read(summary_dft))
+nrow(data)
 ```
+
 
 ```{r summary-year}
 # could become package function
@@ -89,4 +90,12 @@ tar_read(summary_mode) %>%
 targets::tar_make()
 ```
 
+
+# Summary of all the data
+
+A summary of the raw DfT data is shown below:
+
+```{r}
+print(tar_read(summary_dft))
+```
 
