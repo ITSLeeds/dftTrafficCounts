@@ -72,7 +72,7 @@ head(d_counter)
 
 Read-in the data for major roads as follows:
 
-```{r}
+```{r, eval=FALSE}
 d_roads = dtc_import_roads()
 names(d_roads)
 ```
@@ -103,12 +103,13 @@ library(targets)
 d = tar_read(data)
 ```
 
-This is a large dataset:
+This is a large dataset covering all local authorities in Great Britain:
 
 ```{r}
 nrow(d)
 ncol(d)
 names(d)
+head(d$local_authority_name)
 ```
 
 

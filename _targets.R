@@ -22,8 +22,10 @@ summary_dft_mode_year = function(data, v = c("pedal_cycles", "all_motor_vehicles
 }
 
 # Set target-specific options such as packages.
-pkgs = c("dplyr", "dftTrafficCounts")
+# pkgs = c("dplyr", "dftTrafficCounts")
+pkgs = c("dplyr")
 tar_option_set(packages = pkgs)
+devtools::load_all()
 
 # Define targets
 tar_pipeline(
