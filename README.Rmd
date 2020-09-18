@@ -13,6 +13,14 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r targets-setup, include=FALSE}
+library(targets)
+tar_option_set(envir = getNamespace("dftTrafficCounts"))
+# tar_script()
+file.edit("_targets.R")
+```
+
+
 # dftTrafficCounts
 
 <!-- badges: start -->
