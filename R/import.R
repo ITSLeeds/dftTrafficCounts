@@ -53,9 +53,19 @@ dtc_import_roads = function() {
 }
 
 
-local_authority_names_to_ids = function(la_names = c("Leeds")) {
-  la_lookup = dtc_import_la()
-  la_lookup[match(x = )]
+# traffic_data_national = readRDS("~/saferactive/saferactive/traff")
+
+local_authority_names_to_ids = function(
+  la_names = c("Leeds", "Nottingham", "Lincolnshire"),
+  u = "https://roadtraffic.dft.gov.uk/api/local-authorities/"
+  ) {
+  la_lookup = jsonlite::read_json(u, simplifyVector = TRUE)
+  la_df = la_lookup$data[1:3]
+  # str(la_df)
+  # readr::write_csv(la_df, "la_df.csv")
+  # piggyback::pb_upload("la_df.csv")
+  # summary(la_df)
+  la_df$id[match(x = la_names, table = la_df$name)]
 }
 
 # library(tidyverse)

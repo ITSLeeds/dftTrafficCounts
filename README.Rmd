@@ -66,6 +66,7 @@ You can read-in the data for a single counter point as follows:
 
 ```{r}
 d_counter = dtc_import()
+names(d_counter)
 head(d_counter)
 ```
 
@@ -75,6 +76,16 @@ Read-in the data for major roads as follows:
 d_roads = dtc_import_roads()
 names(d_roads)
 ```
+
+Read-in data for all local authorities as follows:
+
+```{r}
+d_las = dtc_import_la()
+head(d_las)
+nrow(d_las)
+length(unique(d_las$local_authority_id))
+```
+
 
 
 
