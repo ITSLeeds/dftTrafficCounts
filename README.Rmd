@@ -53,9 +53,11 @@ devtools::install_github("itsleeds/dftTrafficCounts")
 
 <!-- This data has not been quality checked and we strongly advise users conduct their own assessment of the quality of the data before using it. -->
 
-Load the package as follows:
+Load the package (and packages we'll use below) as follows:
 
 ```{r}
+library(dplyr)
+library(ggplot2)
 library(dftTrafficCounts)
 ```
 
@@ -86,16 +88,19 @@ nrow(d_las)
 length(unique(d_las$local_authority_id))
 ```
 
-<!-- We can plot the results as follows: -->
+We can plot the results as follows:
 
-<!-- ```{r} -->
-<!-- # d_las %>%  -->
-
-<!-- ``` -->
-
-
-
-
+```{r}
+las_of_interest = c("Leeds", "Derby", "Southampton",
+                    "Nottingham", "Birmingham")
+d_las
+d_las_of_interest = d_las %>%
+   filter(local_authority_name %in% las_of_interest)
+d_las %>% 
+  ggplot() +
+  geom_line(aes(year, all_motor_vehicles, group = local_authority_name), colour = "grey") +
+  geom_line(aes(year, all_motor_vehicles, colour = local_authority_name), data = d_las_of_interest, size = 1.2)
+```
 
 ```{r, eval=FALSE}
 u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
@@ -144,7 +149,6 @@ plot(d_day_count)
 
 ```{r summary-year}
 # could become package function
-library(ggplot2)
 tar_read(summary_mode) %>% 
   ggplot() +
   geom_line(aes(year, value, colour = name)) +
@@ -154,8 +158,6 @@ tar_read(summary_mode) %>%
 And by local authorities:
 
 ```{r lasinterest}
-las_of_interest = c("Leeds", "Derby", "Southampton",
-                    "Nottingham", "Birmingham")
 d_sample = d %>% filter(local_authority_name %in% las_of_interest)
 d_summary_la = d_sample %>%
   select(pedal_cycles:buses_and_coaches | matches("year|local_authority_name")) %>% 
@@ -174,7 +176,7 @@ ggplot(d_summary_la) +
 
 You can reproduce the work presented here using the `targets` package:
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE, eval=FALSE}
 remotes::install_github("wlandau/targets", quiet = TRUE)
 remotes::install_github("wlandau/tarchetypes", quiet = TRUE)
 ```
@@ -186,7 +188,7 @@ targets::tar_make()
 Parts of the project are updated as follows:
 
 ```{r tarvis}
-tar_visnetwork()
+# tar_visnetwork()
 ```
 
 
@@ -195,6 +197,6 @@ tar_visnetwork()
 A summary of the raw DfT data is shown below:
 
 ```{r}
-print(tar_read(summary_dft))
+# print(tar_read(summary_dft))
 ```
 
