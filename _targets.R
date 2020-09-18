@@ -5,7 +5,7 @@ library(targets)
 # Define custom functions and other global objects.
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
-summ <- function(dataset) {
+summ = function(dataset) {
   summarize(dataset, mean_x = mean(x))
 }
 
@@ -13,7 +13,7 @@ summ <- function(dataset) {
 tar_option_set(packages = "dplyr")
 
 # Define targets
-targets <- list(
+targets = list(
   tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
   tar_target(summary, summ(data)) # Call your custom functions as needed.
 )
