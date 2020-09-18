@@ -54,4 +54,19 @@ devtools::install_github("itsleeds/dftTrafficCounts")
 
 # Reproducibility
 
-You can reproduce the work presented here as follows...
+You can reproduce the work presented here using the `targets` package:
+
+```{r, echo=FALSE, message=FALSE}
+remotes::install_github("wlandau/targets")
+remotes::install_github("wlandau/tarchetypes")
+```
+
+```{r}
+targets::tar_glimpse()
+```
+
+```{r, eval=FALSE}
+targets::tar_make()
+```
+
+

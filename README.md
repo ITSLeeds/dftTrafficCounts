@@ -40,4 +40,14 @@ devtools::install_github("itsleeds/dftTrafficCounts")
 
 # Reproducibility
 
-You can reproduce the work presented here as follows…
+You can reproduce the work presented here using the `targets` package:
+
+``` r
+targets::tar_glimpse()
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+``` r
+targets::tar_make()
+```
