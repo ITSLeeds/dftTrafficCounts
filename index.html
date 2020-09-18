@@ -90,10 +90,86 @@
 <a href="#reproducibility" class="anchor"></a>Reproducibility</h1>
 <p>You can reproduce the work presented here using the <code>targets</code> package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">targets</span>)
+</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="kw">targets</span>::<span class="fu">tar_glimpse</span>()
 </pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu">tar_read</span>(<span class="kw">summary_dft</span>))
+<span class="co">#&gt;  count_point_id   direction_of_travel      year        count_date        </span>
+<span class="co">#&gt;  Min.   :    51   Length:4337901      Min.   :2000   Min.   :2000-03-17  </span>
+<span class="co">#&gt;  1st Qu.: 46110   Class :character    1st Qu.:2005   1st Qu.:2005-05-13  </span>
+<span class="co">#&gt;  Median :810147   Mode  :character    Median :2009   Median :2009-06-26  </span>
+<span class="co">#&gt;  Mean   :529590                       Mean   :2010   Mean   :2010-01-28  </span>
+<span class="co">#&gt;  3rd Qu.:945786                       3rd Qu.:2015   3rd Qu.:2015-04-24  </span>
+<span class="co">#&gt;  Max.   :999999                       Max.   :2019   Max.   :2019-10-18  </span>
+<span class="co">#&gt;       hour        region_id      local_authority_id  road_name        </span>
+<span class="co">#&gt;  Min.   : 0.0   Min.   : 1.000   Min.   :  1.0      Length:4337901    </span>
+<span class="co">#&gt;  1st Qu.: 9.0   1st Qu.: 4.000   1st Qu.: 67.0      Class :character  </span>
+<span class="co">#&gt;  Median :12.0   Median : 7.000   Median : 97.0      Mode  :character  </span>
+<span class="co">#&gt;  Mean   :12.5   Mean   : 6.157   Mean   :102.5                        </span>
+<span class="co">#&gt;  3rd Qu.:15.0   3rd Qu.: 9.000   3rd Qu.:141.0                        </span>
+<span class="co">#&gt;  Max.   :18.0   Max.   :11.000   Max.   :210.0                        </span>
+<span class="co">#&gt;  road_category       road_type         start_junction_road_name</span>
+<span class="co">#&gt;  Length:4337901     Length:4337901     Length:4337901          </span>
+<span class="co">#&gt;  Class :character   Class :character   Class :character        </span>
+<span class="co">#&gt;  Mode  :character   Mode  :character   Mode  :character        </span>
+<span class="co">#&gt;                                                                </span>
+<span class="co">#&gt;                                                                </span>
+<span class="co">#&gt;                                                                </span>
+<span class="co">#&gt;  end_junction_road_name    easting          northing          latitude    </span>
+<span class="co">#&gt;  Length:4337901         Min.   : 70406   Min.   :  10240   Min.   :49.91  </span>
+<span class="co">#&gt;  Class :character       1st Qu.:367870   1st Qu.: 178500   1st Qu.:51.49  </span>
+<span class="co">#&gt;  Mode  :character       Median :432710   Median : 275950   Median :52.36  </span>
+<span class="co">#&gt;                         Mean   :432488   Mean   : 302533   Mean   :52.61  </span>
+<span class="co">#&gt;                         3rd Qu.:510541   3rd Qu.: 396995   3rd Qu.:53.47  </span>
+<span class="co">#&gt;                         Max.   :655040   Max.   :1209448   Max.   :60.76  </span>
+<span class="co">#&gt;    longitude       link_length_km     link_length_miles    sequence        </span>
+<span class="co">#&gt;  Min.   :-7.4431   Length:4337901     Length:4337901     Length:4337901    </span>
+<span class="co">#&gt;  1st Qu.:-2.4816   Class :character   Class :character   Class :character  </span>
+<span class="co">#&gt;  Median :-1.5119   Mode  :character   Mode  :character   Mode  :character  </span>
+<span class="co">#&gt;  Mean   :-1.5373                                                           </span>
+<span class="co">#&gt;  3rd Qu.:-0.3847                                                           </span>
+<span class="co">#&gt;  Max.   : 2.0000                                                           </span>
+<span class="co">#&gt;      ramp            pedal_cycles      two_wheeled_motor_vehicles</span>
+<span class="co">#&gt;  Length:4337901     Min.   :   0.000   Min.   :  0.000           </span>
+<span class="co">#&gt;  Class :character   1st Qu.:   0.000   1st Qu.:  0.000           </span>
+<span class="co">#&gt;  Mode  :character   Median :   0.000   Median :  1.000           </span>
+<span class="co">#&gt;                     Mean   :   2.873   Mean   :  4.982           </span>
+<span class="co">#&gt;                     3rd Qu.:   2.000   3rd Qu.:  5.000           </span>
+<span class="co">#&gt;                     Max.   :2207.000   Max.   :768.000           </span>
+<span class="co">#&gt;  cars_and_taxis   buses_and_coaches       lgvs         hgvs_2_rigid_axle</span>
+<span class="co">#&gt;  Min.   :   0.0   Min.   :   0.000   Min.   :   0.00   Min.   :   0.00  </span>
+<span class="co">#&gt;  1st Qu.:  44.0   1st Qu.:   0.000   1st Qu.:   7.00   1st Qu.:   0.00  </span>
+<span class="co">#&gt;  Median : 195.0   Median :   2.000   Median :  29.00   Median :   3.00  </span>
+<span class="co">#&gt;  Mean   : 417.2   Mean   :   5.662   Mean   :  71.33   Mean   :  14.43  </span>
+<span class="co">#&gt;  3rd Qu.: 517.0   3rd Qu.:   7.000   3rd Qu.:  82.00   3rd Qu.:  14.00  </span>
+<span class="co">#&gt;  Max.   :9709.0   Max.   :1425.000   Max.   :5811.00   Max.   :2327.00  </span>
+<span class="co">#&gt;  hgvs_3_rigid_axle hgvs_4_or_more_rigid_axle hgvs_3_or_4_articulated_axle</span>
+<span class="co">#&gt;  Min.   : -3.000   Min.   :  0.000           Min.   :  0.00              </span>
+<span class="co">#&gt;  1st Qu.:  0.000   1st Qu.:  0.000           1st Qu.:  0.00              </span>
+<span class="co">#&gt;  Median :  0.000   Median :  0.000           Median :  0.00              </span>
+<span class="co">#&gt;  Mean   :  2.368   Mean   :  2.597           Mean   :  2.14              </span>
+<span class="co">#&gt;  3rd Qu.:  2.000   3rd Qu.:  2.000           3rd Qu.:  1.00              </span>
+<span class="co">#&gt;  Max.   :290.000   Max.   :796.000           Max.   :927.00              </span>
+<span class="co">#&gt;  hgvs_5_articulated_axle hgvs_6_articulated_axle    all_hgvs      </span>
+<span class="co">#&gt;  Min.   :   0.000        Min.   :   0.000        Min.   :   0.00  </span>
+<span class="co">#&gt;  1st Qu.:   0.000        1st Qu.:   0.000        1st Qu.:   1.00  </span>
+<span class="co">#&gt;  Median :   0.000        Median :   0.000        Median :   5.00  </span>
+<span class="co">#&gt;  Mean   :   7.449        Mean   :   7.459        Mean   :  36.45  </span>
+<span class="co">#&gt;  3rd Qu.:   2.000        3rd Qu.:   2.000        3rd Qu.:  26.00  </span>
+<span class="co">#&gt;  Max.   :1107.000        Max.   :1430.000        Max.   :2691.00  </span>
+<span class="co">#&gt;  all_motor_vehicles</span>
+<span class="co">#&gt;  Min.   :    0.0   </span>
+<span class="co">#&gt;  1st Qu.:   54.0   </span>
+<span class="co">#&gt;  Median :  245.0   </span>
+<span class="co">#&gt;  Mean   :  535.6   </span>
+<span class="co">#&gt;  3rd Qu.:  650.0   </span>
+<span class="co">#&gt;  Max.   :10905.0</span>
+</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="kw">targets</span>::<span class="fu">tar_make</span>()
 </pre></div>
 </div>
