@@ -127,5 +127,16 @@ print(tar_read(summary_dft))
 ```
 
 ``` r
+# could become package function
+library(ggplot2)
+tar_read(summary_mode) %>% 
+  ggplot() +
+  geom_line(aes(year, value, colour = name)) +
+  scale_y_log10()
+```
+
+<img src="man/figures/README-summary-year-1.png" width="100%" />
+
+``` r
 targets::tar_make()
 ```

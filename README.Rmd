@@ -74,6 +74,16 @@ tar_visnetwork()
 print(tar_read(summary_dft))
 ```
 
+```{r summary-year}
+# could become package function
+library(ggplot2)
+tar_read(summary_mode) %>% 
+  ggplot() +
+  geom_line(aes(year, value, colour = name)) +
+  scale_y_log10()
+```
+
+
 
 ```{r, eval=FALSE}
 targets::tar_make()
