@@ -188,7 +188,7 @@ targets::tar_make()
 Parts of the project are updated as follows:
 
 ```{r tarvis}
-# tar_visnetwork()
+tar_visnetwork()
 ```
 
 
@@ -197,6 +197,6 @@ Parts of the project are updated as follows:
 A summary of the raw DfT data is shown below:
 
 ```{r}
-# print(tar_read(summary_dft))
+print(tar_read(summary_dft))
 ```
 
