@@ -29,7 +29,8 @@ tar_option_set(packages = pkgs, envir = getNamespace("dftTrafficCounts"))
 
 # Define targets
 tar_pipeline(
-  tar_target(data, dtc_import(u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip")),
+  tar_target(url, "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip", format = "url"),
+  tar_target(data, dtc_import(u = url)),
   tar_target(summary_dft, summ(data)),
   tar_target(summary_mode, summary_dft_mode_year(data)),
   tar_render(readme, "README.Rmd", output_format = "github_document", output_file = "README.md")
