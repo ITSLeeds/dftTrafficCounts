@@ -176,7 +176,7 @@
 <span class="kw">u</span> <span class="op">=</span> <span class="st">"http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"</span>
 <span class="kw">d</span> <span class="op">=</span> <span class="fu"><a href="reference/dtc_import.html">dtc_import</a></span>(u = <span class="kw">u</span>)
 </pre></div>
-<p>This is a large dataset:</p>
+<p>This is a large dataset covering all local authorities in Great Britain:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">d</span>)
 <span class="co">#&gt; [1] 4337901</span>
@@ -204,6 +204,7 @@
 <span class="co">#&gt; [1] "Lancashire" "Lancashire" "Lancashire" "Lancashire" "Lancashire"</span>
 <span class="co">#&gt; [6] "Lancashire"</span>
 </pre></div>
+<p>We can look at how patterns change over time for the whole dataset:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="co"># could become package function</span>
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">ggplot2</span>)
@@ -213,16 +214,32 @@
   <span class="fu">scale_y_log10</span>()
 </pre></div>
 <p><img src="reference/figures/README-summary-year-1.png" width="100%"></p>
+<p>And by local authorities:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">las_of_interest</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Leeds"</span>, <span class="st">"Derby"</span>, <span class="st">"Southampton"</span>,
+                    <span class="st">"Nottingham"</span>, <span class="st">"Birmingham"</span>)
+<span class="kw">d_sample</span> <span class="op">=</span> <span class="kw">d</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(<span class="kw">local_authority_name</span> <span class="op">%in%</span> <span class="kw">las_of_interest</span>)
+<span class="kw">d_summary_la</span> <span class="op">=</span> <span class="kw">d_sample</span> <span class="op">%&gt;%</span>
+  <span class="fu">select</span>(<span class="kw">pedal_cycles</span><span class="op">:</span><span class="kw">buses_and_coaches</span> <span class="op">|</span> <span class="fu">matches</span>(<span class="st">"year|local_authority_name"</span>)) <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span>(<span class="kw">year</span>, <span class="kw">local_authority_name</span>) <span class="op">%&gt;%</span>
+  <span class="fu">summarise_all</span>(<span class="kw">sum</span>) <span class="op">%&gt;%</span>
+  <span class="kw">tidyr</span>::<span class="fu">pivot_longer</span>(cols = <span class="kw">pedal_cycles</span><span class="op">:</span><span class="kw">buses_and_coaches</span>)
+<span class="fu">ggplot</span>(<span class="kw">d_summary_la</span>) <span class="op">+</span>
+  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="kw">year</span>, <span class="kw">value</span>, colour = <span class="kw">name</span>)) <span class="op">+</span>
+  <span class="fu">facet_wrap</span>(<span class="op">~</span><span class="kw">local_authority_name</span>) <span class="op">+</span>
+  <span class="fu">scale_y_log10</span>()
+</pre></div>
+<p><img src="reference/figures/README-lasinterest-1.png" width="100%"></p>
 </div>
 <div id="reproducibility" class="section level1">
 <h1 class="hasAnchor">
 <a href="#reproducibility" class="anchor"></a>Reproducibility</h1>
 <p>You can reproduce the work presented here using the <code>targets</code> package:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="kw">targets</span>::<span class="fu">tar_make</span>()
 </pre></div>
 <p>Parts of the project are updated as follows:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="fu">tar_visnetwork</span>()
 <span class="co">#&gt; Loading dftTrafficCounts</span>
 </pre></div>
@@ -232,7 +249,7 @@
 <h1 class="hasAnchor">
 <a href="#summary-of-all-the-data" class="anchor"></a>Summary of all the data</h1>
 <p>A summary of the raw DfT data is shown below:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<div class="sourceCode" id="cb12"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu">tar_read</span>(<span class="kw">summary_dft</span>))
 <span class="co">#&gt;  count_point_id   direction_of_travel      year        count_date        </span>
 <span class="co">#&gt;  Min.   :    51   Length:4337901      Min.   :2000   Min.   :2000-03-17  </span>
