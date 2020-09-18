@@ -29,6 +29,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 The goal of dftTrafficCounts is to provide easy access to datasets provided by UK Department for Transport (DfT) on their [roadtraffic.dft.gov.uk](https://roadtraffic.dft.gov.uk) website.
+See the [Metadata](http://data.dft.gov.uk.s3.amazonaws.com/road-traffic/all-traffic-data-metadata.pdf) document for details.
 
 ## Installation
 
@@ -63,6 +64,12 @@ library(dftTrafficCounts)
 
 You can read-in the data as follows:
 
+```{r}
+d_counter = dtc_import()
+head(d_counter)
+```
+
+
 ```{r, eval=FALSE}
 u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
 d = dtc_import(u = u)
@@ -84,6 +91,8 @@ nrow(d)
 ncol(d)
 names(d)
 ```
+
+
 
 
 

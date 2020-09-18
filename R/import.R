@@ -13,12 +13,13 @@
 #' head(res[1:3, ])
 #' u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
 #' # dtc_import(u = u)
+#' # dtc_import(u = "http://data.dft.gov.uk/road-traffic/local_authority_traffic.csv")
 dtc_import = function(
   base_url = "https://dft-statistics.s3.amazonaws.com/road-traffic/downloads/",
   ua = "aadf/count_point_id/dft_aadf_count_point_id_74816.csv",
   u = NULL,
   dir = tempdir()) {
-  if(!is.null(u)) {
+  if(!is.null(u) && grepl(pattern = "zip", x = u)) {
     f = file.path(dir, "dft_traffic_counts_raw_counts.zip")
     utils::download.file(u, f)
   } else {
@@ -37,6 +38,16 @@ dtc_import = function(
     # user  system elapsed
     # 6.609   2.186   5.842
     traffic_data_original
+}
+#' @export
+#' @rdname dtc_import
+dtc_import_la = function() {
+  dtc_import(u = "http://data.dft.gov.uk/road-traffic/local_authority_traffic.csv")
+}
+
+local_authority_names_to_ids = function(la_names = c("Leeds")) {
+  la_lookup = dtc_import_la()
+  la_lookup[match(x = )]
 }
 
 # library(tidyverse)

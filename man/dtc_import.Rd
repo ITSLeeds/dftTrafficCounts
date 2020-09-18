@@ -2,6 +2,7 @@
 % Please edit documentation in R/import.R
 \name{dtc_import}
 \alias{dtc_import}
+\alias{dtc_import_la}
 \title{Bulk import traffic data}
 \usage{
 dtc_import(
@@ -10,6 +11,8 @@ dtc_import(
   u = NULL,
   dir = tempdir()
 )
+
+dtc_import_la()
 }
 \arguments{
 \item{base_url}{The base url of the data to access}
@@ -30,4 +33,5 @@ names(res)
 head(res[1:3, ])
 u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
 # dtc_import(u = u)
+# dtc_import(u = "http://data.dft.gov.uk/road-traffic/local_authority_traffic.csv")
 }
