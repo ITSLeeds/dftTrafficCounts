@@ -170,6 +170,15 @@
 <span class="co">#&gt;  Max.   :10905.0</span>
 </pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># could become package function</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">ggplot2</span>)
+<span class="fu">tar_read</span>(<span class="kw">summary_mode</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span>() <span class="op">+</span>
+  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="kw">year</span>, <span class="kw">value</span>, colour = <span class="kw">name</span>)) <span class="op">+</span>
+  <span class="fu">scale_y_log10</span>()
+</pre></div>
+<p><img src="reference/figures/README-summary-year-1.png" width="100%"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="kw">targets</span>::<span class="fu">tar_make</span>()
 </pre></div>
 </div>
