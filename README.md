@@ -140,7 +140,7 @@ u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip"
 d = dtc_import(u = u)
 ```
 
-This is a large dataset:
+This is a large dataset covering all local authorities in Great Britain:
 
 ``` r
 nrow(d)
@@ -170,6 +170,8 @@ head(d$local_authority_name)
 #> [6] "Lancashire"
 ```
 
+We can look at how patterns change over time for the whole dataset:
+
 ``` r
 # could become package function
 library(ggplot2)
@@ -180,6 +182,25 @@ tar_read(summary_mode) %>%
 ```
 
 <img src="man/figures/README-summary-year-1.png" width="100%" />
+
+And by local authorities:
+
+``` r
+las_of_interest = c("Leeds", "Derby", "Southampton",
+                    "Nottingham", "Birmingham")
+d_sample = d %>% filter(local_authority_name %in% las_of_interest)
+d_summary_la = d_sample %>%
+  select(pedal_cycles:buses_and_coaches | matches("year|local_authority_name")) %>% 
+  group_by(year, local_authority_name) %>%
+  summarise_all(sum) %>%
+  tidyr::pivot_longer(cols = pedal_cycles:buses_and_coaches)
+ggplot(d_summary_la) +
+  geom_line(aes(year, value, colour = name)) +
+  facet_wrap(~local_authority_name) +
+  scale_y_log10()
+```
+
+<img src="man/figures/README-lasinterest-1.png" width="100%" />
 
 # Reproducibility
 

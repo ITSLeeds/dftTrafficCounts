@@ -112,9 +112,7 @@ names(d)
 head(d$local_authority_name)
 ```
 
-
-
-
+We can look at how patterns change over time for the whole dataset:
 
 ```{r summary-year}
 # could become package function
@@ -124,6 +122,24 @@ tar_read(summary_mode) %>%
   geom_line(aes(year, value, colour = name)) +
   scale_y_log10()
 ```
+
+And by local authorities:
+
+```{r lasinterest}
+las_of_interest = c("Leeds", "Derby", "Southampton",
+                    "Nottingham", "Birmingham")
+d_sample = d %>% filter(local_authority_name %in% las_of_interest)
+d_summary_la = d_sample %>%
+  select(pedal_cycles:buses_and_coaches | matches("year|local_authority_name")) %>% 
+  group_by(year, local_authority_name) %>%
+  summarise_all(sum) %>%
+  tidyr::pivot_longer(cols = pedal_cycles:buses_and_coaches)
+ggplot(d_summary_la) +
+  geom_line(aes(year, value, colour = name)) +
+  facet_wrap(~local_authority_name) +
+  scale_y_log10()
+```
+
 
 
 # Reproducibility
