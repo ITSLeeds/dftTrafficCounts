@@ -97,6 +97,27 @@
 </pre></div>
 <p><img src="reference/figures/README-tarvis-1.png" width="100%"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(<span class="kw">data</span>)
+<span class="co">#&gt; NULL</span>
+</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="co"># could become package function</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">ggplot2</span>)
+<span class="fu">tar_read</span>(<span class="kw">summary_mode</span>) <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span>() <span class="op">+</span>
+  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="kw">year</span>, <span class="kw">value</span>, colour = <span class="kw">name</span>)) <span class="op">+</span>
+  <span class="fu">scale_y_log10</span>()
+</pre></div>
+<p><img src="reference/figures/README-summary-year-1.png" width="100%"></p>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">targets</span>::<span class="fu">tar_make</span>()
+</pre></div>
+</div>
+<div id="summary-of-all-the-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#summary-of-all-the-data" class="anchor"></a>Summary of all the data</h1>
+<p>A summary of the raw DfT data is shown below:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu">tar_read</span>(<span class="kw">summary_dft</span>))
 <span class="co">#&gt;  count_point_id   direction_of_travel      year        count_date        </span>
 <span class="co">#&gt;  Min.   :    51   Length:4337901      Min.   :2000   Min.   :2000-03-17  </span>
@@ -168,18 +189,6 @@
 <span class="co">#&gt;  Mean   :  535.6   </span>
 <span class="co">#&gt;  3rd Qu.:  650.0   </span>
 <span class="co">#&gt;  Max.   :10905.0</span>
-</pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co"># could become package function</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">ggplot2</span>)
-<span class="fu">tar_read</span>(<span class="kw">summary_mode</span>) <span class="op">%&gt;%</span> 
-  <span class="fu">ggplot</span>() <span class="op">+</span>
-  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="kw">year</span>, <span class="kw">value</span>, colour = <span class="kw">name</span>)) <span class="op">+</span>
-  <span class="fu">scale_y_log10</span>()
-</pre></div>
-<p><img src="reference/figures/README-summary-year-1.png" width="100%"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="kw">targets</span>::<span class="fu">tar_make</span>()
 </pre></div>
 </div>
 
