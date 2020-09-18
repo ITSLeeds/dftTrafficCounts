@@ -19,7 +19,7 @@ dtc_import = function(
   u = NULL,
   dir = tempdir()) {
   if(!is.null(u)) {
-    f = file.path(dir, "dft_traffic_counts_raw_counts-2000-2018.zip")
+    f = file.path(dir, "dft_traffic_counts_raw_counts.zip")
     utils::download.file(u, f)
   } else {
     u = paste0(base_url, ua)

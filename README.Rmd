@@ -62,8 +62,18 @@ remotes::install_github("wlandau/tarchetypes")
 ```
 
 ```{r}
+library(targets)
+```
+
+
+```{r}
 targets::tar_glimpse()
 ```
+
+```{r}
+print(tar_read(summary_dft))
+```
+
 
 ```{r, eval=FALSE}
 targets::tar_make()

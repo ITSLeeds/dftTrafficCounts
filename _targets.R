@@ -6,11 +6,10 @@ library(tarchetypes)
 # Define custom functions and other global objects.
 # This is where you write source(\"R/functions.R\")
 # if you keep your functions in external scripts.
+
 summ = function(dataset) {
-  summarize(dataset, mean_x = mean(x))
+  summary(dataset)
 }
-
-
 
 # Set target-specific options such as packages.
 pkgs = c("dplyr", "dftTrafficCounts")
@@ -18,8 +17,8 @@ tar_option_set(packages = pkgs)
 
 # Define targets
 tar_pipeline(
-  tar_target(data, data.frame(x = sample.int(100), y = sample.int(100))),
-  tar_target(summary, summ(data))
+  tar_target(data, dtc_import(u = "http://data.dft.gov.uk/road-traffic/dft_traffic_counts_raw_counts.zip")),
+  tar_target(summary_dft, summ(data))
   , # Call your custom functions as needed.
   tar_render(readme, "README.Rmd", output_format = "github_document", output_file = "README.md")
 )
